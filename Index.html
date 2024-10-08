@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PHOTO ALBUM "MY AKI ❤️"</title>
+    <style>
+        /* General styling */
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            background: linear-gradient(to bottom, #6dd5ed, #2193b0);
+            height: 100%;
+            color: #fff;
+            overflow: hidden;
+        }
+
+        h1 {
+            font-size: 50px;
+            font-weight: bold;
+            margin-top: 10%;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            position: relative;
+        }
+
+        h1::before, h1::after {
+            content: '❤️';
+            position: absolute;
+            font-size: 40px;
+        }
+
+        h1::before {
+            left: -50px;
+        }
+
+        h1::after {
+            right: -50px;
+        }
+
+        .choice-container {
+            margin-top: 5%;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            display: inline-block;
+            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .choice {
+            font-size: 40px;
+            margin: 20px;
+            padding: 20px 40px;
+            border: none;
+            cursor: pointer;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .choice.no {
+            background-color: #f64f59;
+            color: white;
+            position: relative;
+        }
+
+        .choice.yes {
+            background-color: #56ab2f;
+            color: white;
+            transition: font-size 0.3s ease;
+        }
+
+        .choice:hover {
+            transform: translateY(-5px);
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Second page styling */
+        #secondPage {
+            text-align: center;
+            padding: 50px;
+            background: linear-gradient(to right, #f8ffae, #43c6ac);
+            color: #333;
+            display: none; /* Hide initially */
+        }
+
+        /* Rolling gallery styling */
+        .rolling-gallery {
+            width: 100%;
+            overflow: hidden;
+            white-space: nowrap;
+            position: relative;
+        }
+
+        .rolling-track {
+            display: inline-block;
+            white-space: nowrap;
+            animation: rolling 30s linear infinite;
+        }
+
+        .rolling-gallery img {
+            height: 200px; /* Set a fixed height */
+            margin: 0 10px;
+            border-radius: 10px;
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .rolling-gallery img:hover {
+            transform: scale(1.1);
+        }
+
+        /* Spotlight Modal */
+        .spotlight {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .spotlight-content {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            color: #333;
+            max-width: 90%; /* Make it responsive */
+            width: auto;
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .spotlight img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        .close-btn {
+            background-color: #f64f59;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .close-btn:hover {
+            background-color: #e53e50;
+        }
+
+        @keyframes rolling {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-100%);
+            }
+        }
+
+        @keyframes fall {
+            0% {transform: translateY(0px);}
+            100% {transform: translateY(100vh);}
+        }
+
+        .heart-fall {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            font-size: 20px;
+            color: red;
+            animation: fall 2s linear infinite;
+        }
+
+        /* Media Queries for Responsiveness */
+        @media screen and (max-width: 600px) {
+            h1 {
+                font-size: 30px;
+            }
+
+            .choice {
+                font-size: 20px;
+                padding: 15px 30px;
+            }
+
+            .rolling-gallery img {
+                height: 150px; /* Adjust height for mobile */
+                margin: 0 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- First Page -->
+    <h1>PLEASE AKO NALANG MY AKI ❤️?</h1>
+    <div id="firstPage" class="choice-container">
+        <button id="yesBtn" class="choice yes">Yes</button>
+        <button id="noBtn" class="choice no">No</button>
+    </div>
+
+    <!-- Second Page -->
+    <div id="secondPage">
+        <div class="rolling-gallery">
+            <div class="rolling-track">
+                <img src="photos/1.jpeg" alt="Image 1" data-title="Title 1" data-description="Description for Image 1">
+                <img src="photos/2.jpeg" alt="Image 2" data-title="Title 2" data-description="Description for Image 2">
+                <img src="photos/3.jpeg" alt="Image 3" data-title="Title 3" data-description="Description for Image 3">
+                <img src="photos/4.jpeg" alt="Image 4" data-title="Title 4" data-description="Description for Image 4">
+                <img src="photos/5.jpeg" alt="Image 5" data-title="Title 5" data-description="Description for Image 5">
+                <img src="photos/6.jpeg" alt="Image 6" data-title="Title 6" data-description="Description for Image 6">
+                <img src="photos/7.jpeg" alt="Image 7" data-title="Title 7" data-description="Description for Image 7">
+                <img src="photos/8.jpeg" alt="Image 8" data-title="Title 8" data-description="Description for Image 8">
+                <img src="photos/9.jpeg" alt="Image 9" data-title="Title 9" data-description="Description for Image 9">
+                <img src="photos/IMG_20240925_215402_331.jpg" alt="Image 10" data-title="Title 10" data-description="Description for Image 10">
+            
+                
+                <img src="photos/IMG_20240925_215846_690.jpg" alt="Image 1" data-title="Title 1" data-description="Description for Image 1">
+                <img src="photos/IMG_20241007_225655_711.jpg" alt="Image 2" data-title="Title 2" data-description="Description for Image 2">
+                <img src="photos/IMG_20241008_092407_867.jpg" alt="Image 3" data-title="Title 3" data-description="Description for Image 3">
+                <img src="photos/IMG_20241007_225655_711.jpg" alt="Image 4" data-title="Title 4" data-description="Description for Image 4">
+                <img src="photos/IMG_20241008_092417_144.jpg" alt="Image 5" data-title="Title 5" data-description="Description for Image 5">
+                <img src="photos/IMG_20241008_092432_156.jpg" alt="Image 6" data-title="Title 6" data-description="Description for Image 6">
+                <img src="photos/IMG_20241008_092442_052.jpg" alt="Image 7" data-title="Title 7" data-description="Description for Image 7">
+                <img src="photos/IMG_20241008_092443_068.jpg" alt="Image 8" data-title="Title 8" data-description="Description for Image 8">
+                <img src="photos/IMG_20241008_092508_956.jpg" alt="Image 9" data-title="Title 9" data-description="Description for Image 9">
+                <img src="photos/Messenger_creation_B5CF94DC-24BE-4C0E-B7B7-F2EF5A34F0A8(1).jpeg" alt="Image 10" data-title="Title 10" data-description="Description for Image 10">
+            </div>
+        </div>
+    </div>
+
+    <!-- Spotlight Modal -->
+    <div class="spotlight" id="spotlight">
+        <div class="spotlight-content">
+            <img id="spotlightImage" src="" alt="">
+            <h2 id="spotlightTitle"></h2>
+            <p id="spotlightDescription"></p>
+            <button id="closeSpotlight" class="close-btn">Close</button>
+        </div>
+    </div>
+
+     <!-- Footer Section -->
+     <!-- Footer Section -->
+<footer>
+    <p>“Love is not about possession. Love is about appreciation.”</p>
+    <button id="bloomBtn" class="choice yes">Bloom a Flower</button>
+    <div class="blooming" id="bloomingFlower">
+        <!-- Replace with your GIF URL -->
+        <img class="flower" src="photos/Aki 🥰/blooming-flower-sticker.gif" alt="Blooming Flower">
+    </div>
+</footer>
+
+
+    <script>
+        // Access elements
+        const yesBtn = document.getElementById('yesBtn');
+        const noBtn = document.getElementById('noBtn');
+        const firstPage = document.getElementById('firstPage');
+        const secondPage = document.getElementById('secondPage');
+        const spotlight = document.getElementById('spotlight');
+        const spotlightImage = document.getElementById('spotlightImage');
+        const spotlightTitle = document.getElementById('spotlightTitle');
+        const spotlightDescription = document.getElementById('spotlightDescription');
+        const closeSpotlight = document.getElementById('closeSpotlight');
+        const bloomBtn = document.getElementById('bloomBtn');
+        const bloomingFlower = document.getElementById('bloomingFlower');
+
+        // No button hover to change position
+        noBtn.addEventListener('mouseenter', function() {
+            const randX = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+            const randY = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+            noBtn.style.position = 'absolute';
+            noBtn.style.left = randX + 'px';
+            noBtn.style.top = randY + 'px';
+        });
+
+        // Yes button click event
+        yesBtn.addEventListener('click', function() {
+            firstPage.style.display = 'none';
+            secondPage.style.display = 'block';
+            setInterval(createHeart, 300);
+        });
+
+        // Create falling heart effect
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart-fall');
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * window.innerWidth + 'px';
+            secondPage.appendChild(heart);
+
+            setTimeout(() => heart.remove(), 2000);
+        }
+
+        // Add click event to images in the rolling gallery
+        const images = document.querySelectorAll('.rolling-gallery img');
+        images.forEach(img => {
+            img.addEventListener('click', function() {
+                const title = this.getAttribute('data-title');
+                const description = this.getAttribute('data-description');
+                spotlightImage.src = this.src;
+                spotlightTitle.textContent = title;
+                spotlightDescription.textContent = description;
+                spotlight.style.display = 'flex'; // Show the spotlight modal
+            });
+        });
+
+        // Close spotlight modal
+        closeSpotlight.addEventListener('click', function() {
+            spotlight.style.display = 'none'; // Hide the spotlight modal
+        });
+
+        // Blooming flower effect
+        bloomBtn.addEventListener('click', function() {
+            bloomingFlower.style.display = 'block'; // Show blooming flower
+            setTimeout(() => {
+                bloomingFlower.style.display = 'none'; // Hide after 2 seconds
+            }, 2000);
+        });
+    </script>
+</body>
+</html>
